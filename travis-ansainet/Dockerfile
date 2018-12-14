@@ -1,7 +1,7 @@
 FROM xmarek02/omnetpp-travis-inet:5.4.1-180629
 
 WORKDIR /root
-ENV INET_ROOT="/root/inet/"
+ENV INET_ROOT  /root/inet/
 
 ##just testing; in inet it used only across stages not builds
 #RUN ccache -cCz
@@ -11,16 +11,16 @@ ENV INET_ROOT="/root/inet/"
 #ENV PATH="/root/omnetpp-5.4.1-$TARGET_PLATFORM/bin:/usr/lib/ccache:$PATH"
 
 
-#RUN git clone --recursive https://github.com/inet-framework/inet.git
+RUN git clone --recursive https://github.com/inet-framework/inet.git
 
-
+RUN cd $INET_ROOT
 #turn off for linux, yes for windows
 #EVN PCH="no"
 
-#RUN cd inet/ && \
-#    cp -r /root/nsc-0.5.3 3rdparty && \
-#    make makefiles  && \
-#    make -j $(nproc)
+RUN cd $INET_ROOT &&  \
+    cp -r /root/nsc-0.5.3 3rdparty && \
+    make makefiles  && \
+    make -j $(nproc)
 #
 
 
