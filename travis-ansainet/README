@@ -1,0 +1,4 @@
+Build with:
+
+$ docker build -t xmarek02/omnetpp-travis-ansainet:omnetpp-travis-ansainet-5.4.1-180629
+
