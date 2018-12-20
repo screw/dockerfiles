@@ -1,30 +1,44 @@
-FROM xmarek02/omnetpp-travis-inet:5.4.1-180629
+ARG OMNETPP_VER
+FROM xmarek02/omnetpp-travis-inet:${OMNETPP_VER}-180629
 
 WORKDIR /root
+ARG TARGET_PLATFORM
+ARG MODE
+ARG OMNETPP_VER
+ARG INET_VER
+ENV TARGET_PLATFORM ${TARGET_PLATFROM:-linux}
+ENV MODE ${MODE:-release}
+
 ENV INET_ROOT  /root/inet
 ENV INET_BASE /root/inet
+
+#RUN echo $OMNETPP_VER
+
 ##just testing; in inet it used only across stages not builds
 RUN ccache -cCz
-ENV TARGET_PLATFORM="linux"
-ENV MODE="release"
 
+ENV TARGET_PLATFORM ${TARGET_PLATFROM:-linux} 
+ENV MODE ${MODE:-release} 
+
+#RUN echo "MODE: $MODE, target: $TARGET_PLATFORM"
 #ENV PATH="/root/omnetpp-5.4.1-$TARGET_PLATFORM/bin:/usr/lib/ccache:$PATH"
 
-
+# ADD checkout for specific tag
 RUN git clone --recursive https://github.com/screw/inet.git
 
 RUN cd $INET_BASE && cp -r /root/nsc-0.5.3 3rdparty 
+
 #turn off for linux, yes for windows
-ENV PCH="no"
+#ENV PCH="no"
 
 #RUN for platform in linux windows macosx; \
-RUN for platform in windows; \
-    do for mode in release debug; \
+RUN for platform in $TARGET_PLATFORM; \
+    do for mode in $MODE; \
       do cp -r $INET_BASE $INET_BASE-$platform-$mode; \
         cd $INET_BASE-$platform-$mode; \
         TARGET_PLATFORM=$platform && \
         MODE=$mode && \
-        export PATH="/root/omnetpp-5.4.1-$TARGET_PLATFORM/bin:$PATH" && \
+        export PATH="/root/omnetpp-${OMNETPP_VER}-$TARGET_PLATFORM/bin:$PATH" && \
         export INET_ROOT=`pwd` && \
         echo $INET_ROOT && \
         export PATH=$INET_ROOT/bin:$PATH && \

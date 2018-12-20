@@ -1,3 +1,4 @@
+Depracated. Replaced with travis-ansainet-base (-base since it is just 'base' to build ANSA) 
 Build with:
 
 $ docker build -t xmarek02/omnetpp-travis-ansainet:omnetpp-travis-ansainet-5.4.1-180629

@@ -1,0 +1,45 @@
+# Based on Patrick Double's - Docker Parametrized Builds Using Git Tags (https://bitbucket.org/double16/gradle-dockercompose)
+_O_V="5.4.1"   # omnetpp version
+_I_V="v4.0.0"  # INET version
+_t_p="linux"   # Target platform (linux, windows, macosx) 
+_m="release"   # Mode (release, debug_
+
+# These values are passed by the hub, but if they aren't we can get them from git.
+# matches travis-ansainet-base-5.4.1-v4.0.0-windows-release-pre1 cuts away travis-ansainet-base (or any text) and the trailing -rc1 or -pre1
+[ -n "$SOURCE_BRANCH" ]  || SOURCE_BRANCH=$(git symbolic-ref -q --short HEAD | sed -e 's/[a-z-]\+-\([0-9.]\+-[0-9v.]\+-[a-z]\+-[a-z]\+\)\(\(-rc[0-9]\+\)*\(-pre[0-9]\+\)*\)*/\1/' )
+[ -n "$SOURCE_BRANCH" ]  || SOURCE_BRANCH=latest
+[ -n "$GIT_SHA1" ]       || GIT_SHA1=$(git rev-parse -q HEAD)
+
+echo $SOURCE_BRANCH
+
+#[ "$SOURCE_BRANCH" = "master" ] && SOURCE_BRANCH="latest"
+[ "$SOURCE_BRANCH" = "master" ] && SOURCE_BRANCH="$_O_V-$_I_V-$_t_p-$_m"
+
+#echo $SOURCE_BRANCH
+
+# Parse arguments from source branch
+IFS=- read -r OMNETPP_VER INET_VER TARGET_PLATFORM MODE <<EOF
+$SOURCE_BRANCH
+EOF
+
+echo "O $OMNETPP_VER I $INET_VER t $TARGET_PLATFORM m $MODE"
+# If the tag isn't in the expected format, clean all values to get defaults
+if [ -z "$OMNETPP_VER" -o -z "$INET_VER" -o -z "$TARGET_PLATFORM" -o -z "$MODE" ]; then
+	OMNETPP_VER=''
+	INET_VER=''
+	TARGET_PLATFORM=''
+        MODE=''
+fi
+
+
+# Set default for build arguments
+[ -n "$OMNETPP_VER" ] 			|| OMNETPP_VER=$_O_V 
+[ -n "$INET_VER" ] 			|| INET_VER=$_I_V
+[ -n "$TARGET_PLATFROM" ] 		|| TARGET_PLATFORM=$_t_p
+[ -n "$MODE" ] 				|| MODE=$_m
+[ -n "$SOURCE_TYPE" ]       		|| SOURCE_TYPE=git
+[ -n "$DOCKERFILE_PATH" ]  	  	|| DOCKERFILE_PATH=.
+
+
+IMAGE_NAME=xmarek02/omnetpp-travis-ansainet-base:${OMNETPP_VER}-${INET_VER}-${TARGET_PLATFORM}-${MODE}
+
