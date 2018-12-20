@@ -1,6 +1,6 @@
 Base image with OMNeT (for all three platforms) and specific INET-{platform}-{mode} version to testbuild ANSA with Travis-CI.
 
-Build with: (to be edited)
+Manual build:
+./hooks/build
 
-$ docker build -t xmarek02/omnetpp-travis-ansainet:omnetpp-travis-ansainet-5.4.1-180629
 
