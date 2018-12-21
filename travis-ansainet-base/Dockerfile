@@ -27,9 +27,6 @@ RUN git clone --recursive https://github.com/screw/inet.git
 
 RUN cd $INET_BASE && cp -r /root/nsc-0.5.3 3rdparty 
 
-#turn off for linux, yes for windows
-#ENV PCH="no"
-
 #RUN for platform in linux windows macosx; \
 RUN for platform in $TARGET_PLATFORM; \
     do for mode in $MODE; \
