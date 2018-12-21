@@ -22,7 +22,7 @@ SOURCE_BRANCH=$(echo $SOURCE_BRANCH | sed -e 's/[a-z-]\+-\([0-9.]\+-[0-9v.]\+-[a
 
 # Parse arguments from source branch
 IFS=- read -r OMNETPP_VER INET_VER TARGET_PLATFORM MODE <<EOF
-$CACHE_TAG
+$SOURCE_BRANCH
 EOF
 
 echo "O $OMNETPP_VER I $INET_VER t $TARGET_PLATFORM m $MODE"
