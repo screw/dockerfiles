@@ -1,5 +1,5 @@
 #!/bin/bash -xe
-. ./hooks/env
+#. ./hooks/env
 
 
 docker build \
