@@ -20,7 +20,6 @@ RUN ccache -cCz
 ENV TARGET_PLATFORM ${TARGET_PLATFROM:-linux} 
 ENV MODE ${MODE:-release} 
 
-#RUN echo "MODE: $MODE, target: $TARGET_PLATFORM"
 #ENV PATH="/root/omnetpp-5.4.1-$TARGET_PLATFORM/bin:/usr/lib/ccache:$PATH"
 
 # ADD checkout for specific tag
