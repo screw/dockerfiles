@@ -3,7 +3,7 @@ _O_V="5.4.1"   # omnetpp version
 _I_V="v4.0.0"  # INET version
 _t_p="linux"   # Target platform (linux, windows, macosx) 
 _m="release"   # Mode (release, debug_
-
+env
 # These values are passed by the hub, but if they aren't we can get them from git.
 # matches travis-ansainet-base-5.4.1-v4.0.0-windows-release-pre1 cuts away travis-ansainet-base (or any text) and the trailing -rc1 or -pre1
 [ -n "$CACHE_TAG" ]  || CACHE_TAG=$(git symbolic-ref -q --short HEAD | sed -e 's/[a-z-]\+-\([0-9.]\+-[0-9v.]\+-[a-z]\+-[a-z]\+\)\(\(-rc[0-9]\+\)*\(-pre[0-9]\+\)*\)*/\1/' )
