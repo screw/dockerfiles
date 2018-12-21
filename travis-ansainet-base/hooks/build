@@ -7,4 +7,5 @@ docker build \
 	--build-arg "INET_VER=$INET_VER" \
 	--build-arg "TARGET_PLATFORM=$TARGET_PLATFORM" \
 	--build-arg "MODE=$MODE" \
+	-f $DOCKERFILE_PATH \
 	-t $IMAGE_NAME .  
