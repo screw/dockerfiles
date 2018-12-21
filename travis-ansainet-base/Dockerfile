@@ -1,5 +1,5 @@
-#ARG OMNETPP_VER
-FROM xmarek02/omnetpp-travis-inet:5.4.1-180629
+ARG OMNETPP_VER
+FROM xmarek02/omnetpp-travis-inet:${OMNETPP_VER}-180629
 
 WORKDIR /root
 ARG TARGET_PLATFORM
