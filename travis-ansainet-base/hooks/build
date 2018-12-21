@@ -1,0 +1,11 @@
+#!/bin/bash -xe
+. ./hooks/env
+
+
+docker build \
+	--build-arg "OMNETPP_VER=$OMNETPP_VER" \
+	--build-arg "INET_VER=$INET_VER" \
+	--build-arg "TARGET_PLATFORM=$TARGET_PLATFORM" \
+	--build-arg "MODE=$MODE" \
+	-f $DOCKERFILE_PATH \
+	-t $IMAGE_NAME .  
