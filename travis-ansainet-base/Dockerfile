@@ -20,9 +20,15 @@ RUN ccache -cCz
 #ENV PATH="/root/omnetpp-5.4.1-$TARGET_PLATFORM/bin:/usr/lib/ccache:$PATH"
 
 # ADD checkout for specific tag
+# Omit --recursive? (not needed for build, but the image is used for fingerprinting as well)
 RUN git clone --recursive https://github.com/screw/inet.git
 
 RUN cd $INET_BASE && cp -r /root/nsc-0.5.3 3rdparty 
+
+# The following is a combination of INET's setenv and _scripts/travis/
+# Why not just call the INET's scripts??????
+# Set TRAVIS_REPO_SLUG and pretend it's INET's Travis-CI build
+# Don't forget to check INET_ROOT in ANSA travis.yml when changing to use INET's script
 
 #RUN for platform in linux windows macosx; \
 RUN for platform in $TARGET_PLATFORM; \
