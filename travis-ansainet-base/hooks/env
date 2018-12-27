@@ -11,7 +11,8 @@ env
 # These values are passed by the hub, but if they aren't we can get them from git.
 # matches travis-ansainet-base-5.4.1-v4.0.0-windows-release-pre1 cuts away travis-ansainet-base (or any text) and the trailing -rc1 or -pre1
 #[ -n "$SOURCE_BRANCH" ]  || SOURCE_BRANCH=$(git symbolic-ref -q --short HEAD | sed -e 's/[a-z-]\+-\([0-9.]\+-[0-9v.]\+-[a-z]\+-[a-z]\+\)\(\(-rc[0-9]\+\)*\(-pre[0-9]\+\)*\)*/\1/' )
-[ -n "$SOURCE_BRANCH" ]  || SOURCE_BRANCH=$(git describe --abbrev=0)
+# If SOURCE_BRANCH is not set, get the last tag.
+[ -n "$SOURCE_BRANCH" ]  || SOURCE_BRANCH=$(git describe --tag)
 [ -n "$SOURCE_BRANCH" ]  || SOURCE_BRANCH=latest
 [ -n "$GIT_SHA1" ]       || GIT_SHA1=$(git rev-parse -q HEAD)
 
@@ -19,6 +20,7 @@ env
 
 #[ "$SOURCE_BRANCH" = "master" ] && SOURCE_BRANCH="latest"
 [ "$SOURCE_BRANCH" = "master" ] && CACHE_TAG="$_O_V-$_I_V-$_t_p-$_m"
+
 # if DOCKER_TAG is not set parse it from SOURCE_BRANCH
 [ -n "$DOCKER_TAG" ]	|| DOCKER_TAG=$(echo $SOURCE_BRANCH | sed -e 's/[a-z-]*\([0-9.]\+-[0-9v.]\+-[a-z]\+-[a-z]\+\)\(\(-rc[0-9]\+\)*\(-pre[0-9]\+\)*\)*/\1/' )
 
