@@ -25,7 +25,7 @@ Accept single parameter <omnet-version>-<inet-version>.
 Manual build:
 1. Build single image.
 Set DOCKER_TAG environment variable and run
-export DOCKER_TAG="travis-ansainet-base-5.4.1-v4.0.0-linux-release"
+export DOCKER_TAG="5.4.1-v4.0.0-linux-release"
 ./hooks/build
 
 2. Build all six images.
